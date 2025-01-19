@@ -1,0 +1,160 @@
+<!DOCTYPE html>      
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Innovation Institute  Registration</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+<style>
+body {
+	font-family: Arial, sans-serif;
+	display: flex;
+	height: 100vh;
+	background-color: #f0f0f0;
+	margin: 0;
+	height: 100vh;
+}
+
+.container1 {
+	margin-top: 50px;
+	margin-left: 200px;
+	display: flex;
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	width: 900px;
+	height: 500px;
+	display: flex;
+}
+
+.form-container {
+	padding: 20px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+h1 {
+	font-size: 24px;
+	margin-bottom: 20px;
+	color: #333;
+}
+
+input {
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.btn {
+	background: linear-gradient(to right, #162bc1, #299a28);
+	border: none;
+	color: white;
+	padding: 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+	transition: background 0.3s;
+}
+
+.btn:hover {
+	background: #feb47b;
+}
+
+.login-link {
+	text-align: center;
+	margin-top: 15px;
+}
+
+.login-link a {
+	color: #ff7e5f;
+	text-decoration: none;
+}
+
+.info-container {
+	background: linear-gradient(to right, #162bc1, #299a28);
+	color: white;
+	padding: 20px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.info-container h2 {
+	margin-bottom: 10px;
+	font-size: 22px;
+}
+
+.info-container p {
+	font-size: 16px;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<nav class="navbar navbar-expand-lg bg-body-tertiary">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="/"><img alt="brandname"
+					src="images/logo.jpg" height="60" width="150"></a>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="/">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">service</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">courses</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">contact
+								us</a></li>
+
+					</ul>
+					<form class="d-flex" role="search" action="login">
+						<button class="btn btn-outline-success" type="submit">Login</button>
+					</form>
+				</div>
+		</nav>
+		<form th:action="@{/signup}"  th:object="${user}" method="POST">
+			<div class="container1">
+			
+				<div class="form-container">
+		
+					<img src="images/logo.jpg" alt="Innovation Institute "
+						style="max-width: 150px; margin-left: 120px;">
+						<br>
+					<h1>Please create account here</h1>
+					<input type="text" placeholder="Name" th:field="*{name}" >
+					 <input	type="email" placeholder="Email" th:field="*{email}" >
+					  <input type="text" placeholder="Phone Num" th:field="*{phn}" required >
+					<button class="btn">SIGN UP</button>
+						   
+				  <p th:text="${success}"></p>
+				  <p th:text="${error}"></p>
+				  
+					<div class="login-link">
+						<p>
+							Do You have an account? <a href="/login">LOGIN HERE</a>
+						</p>
+					</div>
+				</div>
+				<div class="info-container">
+					<h2>Innovation Institute is more than just a Software Training
+						Institute</h2>
+					<p>Student Satisfaction is at most important for us.</p>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+
+<style>
+
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+th, td {
+	padding: 10px;
+	border: 1px solid #ddd;
+	text-align: left;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+
+</style>
+<body>
+
+     <div class="container">
+		<div id="filterResultTable"></div>
+			<table id="tableEnq">
+				<thead>
+					<tr>
+						<th>S.No</th>
+						<th>Name</th>
+						<th>Course</th>
+						<th>Phone Number</th>
+						<th>Enquiry Date</th>
+						<th>Enquiry Updated Date</th>
+						<th>Status</th>
+						<th>mode</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="enq:${enquries}">
+						<td th:text="${enq.enqId}"></td>
+						<td th:text="${enq.studentName}"></td>
+						<td th:text="${enq.courseName}"></td>
+						<td th:text="${enq.studentPhn}"></td>
+						<td th:text="${enq.dateCreated}"></td>
+						<td th:text="${enq.updateDate}"></td>
+						<td th:text="${enq.enquiryStatus}"></td>
+						<td th:text="${enq.classStatus}"></td>
+						<td><a th:href="@{/edit(id=${enq.enqId})}">Edit</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+</body>
+</html>

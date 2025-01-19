@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Enquiry</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+<script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$(".form-select").on("change", function(e) {
+			$.ajax({
+				type : "GET",
+				url : "filter", // URL to send the request
+				// HTTP method
+				data : {
+					course : $("#course").val(),
+					mode : $("#mode").val(),
+					status : $("#status").val()
+				}, // Convert data to JSON
+				success : function(result) {
+					// Handle success
+					$("#tableEnq").hide();
+					$("#filterResultTable").html(result);
+
+					//console.log("Data sent successfully:", response);
+				}
+			});
+		});
+	});
+</script>
+
+<style>
+body {
+	font-family: Arial, sans-serif;
+	display: flex;
+	height: 100vh;
+	background-color: #f0f0f0;
+	margin: 0;
+	height: 100vh;
+}
+
+.container1 {
+	margin-top: 20px;
+	background-color: white;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.filter {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+select, button {
+	padding: 10px;
+	margin-right: 10px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+th, td {
+	padding: 10px;
+	border: 1px solid #ddd;
+	text-align: left;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+.edit-button {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.edit-button:hover {
+	background-color: #0056b3;
+}
+
+.left {
+	padding: 70px;
+	flex: 1;
+}
+
+.right {
+	background: linear-gradient(to right, #162bc1, #299a28);
+	color: white;
+	padding: 40px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+h1 {
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+input[type="text"], input[type="password"] {
+	width: 100%;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+button {
+	background-color: #ff7e5f;
+	color: white;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	width: 100%;
+	font-size: 16px;
+}
+
+button:hover {
+	background-color: #feb47b;
+}
+
+.create-account {
+	color: #ff7e5f;
+	text-decoration: none;
+}
+
+.create-account:hover {
+	text-decoration: underline;
+}
+
+.footer {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.create-account {
+	color: #ff7e5f;
+	cursor: pointer;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<nav class="navbar navbar-expand-lg bg-body-tertiary">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="/"><img alt="brandname"
+					src="images/Java4.jpeg" height="60" width="150"></a>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="/dashboard">Dashboard</a></li>
+						<li class="nav-item"><a class="nav-link" href="/addenquiry">Add
+								Enquiry</a></li>
+						<li class="nav-item"><a class="nav-link" href="/view">View
+								Enquiry</a></li>
+					</ul>
+					<form class="d-flex" role="search" action="/">
+						<a href="/logout"><button class="btn btn-outline-success"
+								type="submit">Logout</button></a>
+					</form>
+				</div>
+			</div>
+		</nav>
+		<div class="container1">
+			<h1>View Student Enquiries</h1>
+			<form th:action="@{/filter}" th:object="${criteria}" method="POST">
+			<div class="filter">
+					<h5>Enquiry Status :</h5><select id="status" class="form-select">
+						<option value="">-Select-</option>
+						<option th:each="statu : ${status}" th:value="${statu}"
+							th:text="${statu}"></option>
+					</select> <h5>Student Course</h5><select id="course" class="form-select">
+						<option value="">-Select-</option>
+						<option th:each="course: ${courses}" th:value="${course}"
+							th:text="${course}"></option>
+					</select><h5>Class Mode</h5><select id="mode" class="form-select">
+						<!-- th:field="*{modes}" -->
+						<option value="">-Select-</option>
+						<option value="Online">Online</option>
+						<option value="Offline">Offline</option>
+					</select>
+			</div>
+			</form>
+			<div id="filterResultTable"></div>
+			<table id="tableEnq">
+				<thead>
+					<tr>
+						<th>S.No</th>
+						<th>Name</th>
+						<th>Course</th>
+						<th>Phone Number</th>
+						<th>Enquiry Date</th>
+						<th>Enquiry Updated Date</th>
+						<th>Status</th>
+						<th>mode</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="enq:${enquries}">
+						<td th:text="${enq.enqId}"></td>
+						<td th:text="${enq.studentName}"></td>
+						<td th:text="${enq.courseName}"></td>
+						<td th:text="${enq.studentPhn}"></td>
+						<td th:text="${enq.dateCreated}"></td>
+						<td th:text="${enq.updateDate}"></td>
+						<td th:text="${enq.enquiryStatus}"></td>
+						<td th:text="${enq.classStatus}"></td>
+						<td><a th:href="@{/edit(id=${enq.enqId})}">Edit</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
